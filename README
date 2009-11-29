@@ -1,7 +1,17 @@
 =============================================================================
 Project:   RichTextDemo
-Copyright: ©2009 My Company, Inc.
+Copyright: ©2009 Peter Wagenet
 =============================================================================
 
-TODO: Describe Your Project
+Demo of a RichText Editor for Sproutcore.
 
+To install:
+
+  git clone git://github.com/rxcfc/rich_text_demo
+  cd rich_text_demo
+  git submodule init
+  git submodule update
+
+To run (requires the sproutcore gem):
+
+  sc-server
