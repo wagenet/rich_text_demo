@@ -4453,43 +4453,47 @@ For more information about SproutCore, visit http://www.sproutcore.com
 ==========================================================================
 @license */
 }if((typeof SC!=="undefined")&&SC&&SC.bundleDidLoad){SC.bundleDidLoad("sproutcore")
-}SC.stringsFor("English",{});RichText=SC.Object.create({NAMESPACE:"RichText",VERSION:"0.2.0",blank:function(a){return SC.none(a)||a===""
+}SC.stringsFor("English",{});RichText=SC.Object.create({NAMESPACE:"RichText",VERSION:"0.3.0",blank:function(a){return SC.none(a)||a===""
 }});RichText.HtmlSanitizer=SC.Object.create({fontSizeNames:function(){var a="xxx-small xx-small x-small small medium large x-large xx-large".w();
-if(SC.browser.safari){a.shift();a.push("-webkit-xxx-large")}return a}.property().cacheable(),fontSizePixels:"9 10 13 16 18 24 32 48".w(),formatHTMLOutput:function(i){var j,k,d,b,c,f,a,l,h;
-i=this.tidyXHTML(i);if(SC.browser.safari){i=i.replace(/(<div>)+/g,"\n");i=i.replace(/(<\/div>)+/g,"");
-i=i.replace(/<p>\s*<\/p>/g,"");i=i.replace(/<br \/>(\n)*/g,"\n")}else{if(SC.browser.mozilla){i=i.replace(/<p>/g,"");
-i=i.replace(/<\/p>(\n)?/g,"\n");i=i.replace(/<br \/>(\n)*/g,"\n")}else{if(SC.browser.msie||SC.browser.opera){i=i.replace(/<p>(&nbsp;|&#160;|\s)<\/p>/g,"<p></p>");
-i=i.replace(/<br \/>/g,"");i=i.replace(/<p>/g,"");i=i.replace(/&nbsp;/g,"");i=i.replace(/<\/p>(\n)?/g,"\n");
-i=this._gsub(i,/^<p>/,"");i=this._gsub(i,/<\/p>$/,"")}}}i=this._gsub(i,/<b>/,"<strong>");
-i=this._gsub(i,/<\/b>/,"</strong>");i=this._gsub(i,/<i>/,"<em>");i=this._gsub(i,/<\/i>/,"</em>");
-i=this._gsub(i,/<(strike|s)>/,"<del>");i=this._gsub(i,/<\/(strike|s)>/,"</del>");
-i=i.replace(/\n\n+/g,"</p>\n\n<p>");i=this._gsub(i,/(([^\n])(\n))(?=([^\n]))/,function(m){return m[2]+"<br />\n"
-});i="<p>"+i+"</p>";i=i.replace(/<p>\s*/g,"<p>");i=i.replace(/\s*<\/p>/g,"</p>");
-var e=SC.$("<div></div>");e.html(i);d=e.find("font");for(h=0;h<d.length;h++){c=SC.$(d[h]);
-k=SC.$("<span>"+c.html()+"</span>");if(f=c.attr("color")){k.css("color",f)}if(a=c.css("background-color")){k.css("background-color",a)
-}if(l=c.attr("size")){k.css("font-size",this._fontSizeToPixels(l))}c.replaceWith(k)
-}d=e.find("span");for(h=0;h<d.length;h++){b=d[h];c=SC.$(b);f=c.css("color");a=c.css("background-color");
-if(f==="transparent"||f==="inherit"){c.css("color","")}if(a==="transparent"||a==="inherit"){c.css("background-color","")
-}if(b.style.length==0){c.removeAttr("style")}}if(SC.browser.safari||SC.browser.mozilla){do{j=false;
-d=e.find("span");for(h=0;h<d.length;h++){b=d[h];c=SC.$(b);if(c.hasClass("Apple-style-span")){c.removeClass("Apple-style-span");
-if(c.attr("class")==""){c.removeAttr("class")}j=true}else{if(c.css("fontWeight")=="bold"){c.css({fontWeight:""});
-if(b.style.length==0){c.removeAttr("style")}c.html("<strong>"+c.html()+"</strong>");
-j=true}else{if(c.css("fontStyle")=="italic"){c.css({fontStyle:""});if(b.style.length==0){c.removeAttr("style")
-}c.html("<em>"+c.html()+"</em>");j=true}else{if(c.css("textDecoration")=="underline"){c.css({textDecoration:""});
-if(b.style.length==0){c.removeAttr("style")}c.html("<u>"+c.html()+"</u>");j=true}else{if(c.css("textDecoration")=="line-through"){c.css({textDecoration:""});
-if(b.style.length==0){c.removeAttr("style")}c.html("<del>"+c.html()+"</del>");j=true
-}else{if(l=this._fontNameToPixels(c.css("font-size"))){c.css("font-size",l);j=true
-}else{if(b.attributes.length==0){c.replaceWith(c.html());j=true}}}}}}}}}while(j)}var g=["BR","IMG"];
-e.find("*").filter(function(){return SC.$(this).html()==""&&g.indexOf(this.nodeName)==-1&&this.id!="bookmark"
-}).remove();i=e.html();i=this.tidyXHTML(i);i=i.replace(/<br \/>(\n)*/g,"<br />\n");
-i=i.replace(/<\/p>\n<p>/g,"</p>\n\n<p>");i=i.replace(/<p>\s*<\/p>/g,"");i=i.replace(/\s*$/g,"");
-return i},formatHTMLInput:function(b){var a=SC.$("<div></div>");a.html(b);if(SC.browser.mozilla||SC.browser.safari){a.find("strong").each(function(){SC.$(this).replaceWith('<span style="font-weight: bold;">'+SC.$(this).html()+"</span>")
+if(SC.browser.safari){a.shift();a.push("-webkit-xxx-large")}return a}.property().cacheable(),fontSizePixels:"9 10 13 16 18 24 32 48".w(),formatHTMLOutput:function(j){var k,l,d,b,c,e,g,a,m,i;
+j=this.tidyXHTML(j);if(SC.browser.safari){j=j.replace(/(<div>)+/g,"\n");j=j.replace(/(<\/div>)+/g,"");
+j=j.replace(/<p>\s*<\/p>/g,"");j=j.replace(/<br \/>(\n)*/g,"\n")}else{if(SC.browser.mozilla){j=j.replace(/<p>/g,"");
+j=j.replace(/<\/p>(\n)?/g,"\n");j=j.replace(/<br \/>(\n)*/g,"\n")}else{if(SC.browser.msie||SC.browser.opera){j=j.replace(/<p>(&nbsp;|&#160;|\s)<\/p>/g,"<p></p>");
+j=j.replace(/<br \/>/g,"");j=j.replace(/<p>/g,"");j=j.replace(/&nbsp;/g,"");j=j.replace(/<\/p>(\n)?/g,"\n");
+j=this._gsub(j,/^<p>/,"");j=this._gsub(j,/<\/p>$/,"")}}}j=this._gsub(j,/<b>/,"<strong>");
+j=this._gsub(j,/<\/b>/,"</strong>");j=this._gsub(j,/<i>/,"<em>");j=this._gsub(j,/<\/i>/,"</em>");
+j=this._gsub(j,/<(strike|s)>/,"<del>");j=this._gsub(j,/<\/(strike|s)>/,"</del>");
+j=j.replace(/\n\n+/g,"</p>\n\n<p>");j=this._gsub(j,/(([^\n])(\n))(?=([^\n]))/,function(n){return n[2]+"<br />\n"
+});j="<p>"+j+"</p>";j=j.replace(/<p>\s*/g,"<p>");j=j.replace(/\s*<\/p>/g,"</p>");
+var f=SC.$("<div></div>");f.html(j);f.find("ul, ol").each(function(){c=SC.$(this);
+e=c.prev()[0];if(e&&e.tagName==="LI"){c.prev().append(this)}});d=f.find("font");for(i=0;
+i<d.length;i++){c=SC.$(d[i]);l=SC.$("<span>"+c.html()+"</span>");if(g=c.attr("color")){l.css("color",g)
+}if(a=c.css("background-color")){l.css("background-color",a)}if(m=c.attr("size")){l.css("font-size",this._fontSizeToPixels(m))
+}c.replaceWith(l)}d=f.find("span");for(i=0;i<d.length;i++){b=d[i];c=SC.$(b);g=c.css("color");
+a=c.css("background-color");if(g==="transparent"||g==="inherit"){c.css("color","")
+}if(a==="transparent"||a==="inherit"){c.css("background-color","")}if(b.style.length===0){c.removeAttr("style")
+}}if(SC.browser.safari||SC.browser.mozilla){do{k=false;d=f.find("span");for(i=0;i<d.length;
+i++){b=d[i];c=SC.$(b);if(c.hasClass("Apple-style-span")){c.removeClass("Apple-style-span");
+if(c.attr("class")===""){c.removeAttr("class")}k=true}else{if(c.css("fontWeight")==="bold"){c.css({fontWeight:""});
+if(b.style.length===0){c.removeAttr("style")}c.html("<strong>"+c.html()+"</strong>");
+k=true}else{if(c.css("fontStyle")==="italic"){c.css({fontStyle:""});if(b.style.length===0){c.removeAttr("style")
+}c.html("<em>"+c.html()+"</em>");k=true}else{if(c.css("textDecoration")==="underline"){c.css({textDecoration:""});
+if(b.style.length===0){c.removeAttr("style")}c.html("<u>"+c.html()+"</u>");k=true
+}else{if(c.css("textDecoration")==="line-through"){c.css({textDecoration:""});if(b.style.length===0){c.removeAttr("style")
+}c.html("<del>"+c.html()+"</del>");k=true}else{if(m=this._fontNameToPixels(c.css("font-size"))){c.css("font-size",m);
+k=true}else{if(b.attributes.length===0){c.replaceWith(c.html());k=true}}}}}}}}}while(k)
+}if(SC.browser.safari||SC.browser.msie){do{d=f.find("blockquote");d.each(function(){c=SC.$(this);
+c.replaceWith("<div style='margin-left: 40px'>"+c.html()+"</div>")})}while(d.length>0)
+}f.find("br").replaceWith("<br />");var h=["BR","IMG"];f.find("*").filter(function(){return SC.$(this).html()===""&&h.indexOf(this.nodeName)===-1&&this.id!=="bookmark"
+}).remove();j=f.html();j=this.tidyXHTML(j);j=j.replace(/<br \/>(\n)*/g,"<br />\n");
+j=j.replace(/<\/p>\n<p>/g,"</p>\n\n<p>");j=j.replace(/<p>\s*<\/p>/g,"");j=j.replace(/\s*$/g,"");
+return j},formatHTMLInput:function(b){var a=SC.$("<div></div>");a.html(b);if(SC.browser.mozilla||SC.browser.safari){a.find("strong").each(function(){SC.$(this).replaceWith('<span style="font-weight: bold;">'+SC.$(this).html()+"</span>")
 });a.find("em").each(function(){SC.$(this).replaceWith('<span style="font-style: italic;">'+SC.$(this).html()+"</span>")
 });a.find("u").each(function(){SC.$(this).replaceWith('<span style="text-decoration: underline;">'+SC.$(this).html()+"</span>")
 });a.find("del").each(function(){SC.$(this).replaceWith('<span style="text-decoration: line-through;">'+SC.$(this).html()+"</span>")
-})}if(SC.browser.safari){a.find("span").each(function(){if(SC.$(this).css("fontWeight")=="bold"){SC.$(this).addClass("Apple-style-span")
-}if(SC.$(this).css("fontStyle")=="italic"){SC.$(this).addClass("Apple-style-span")
-}if(SC.$(this).css("textDecoration")=="underline"){SC.$(this).addClass("Apple-style-span")
+})}if(SC.browser.safari){a.find("span").each(function(){if(SC.$(this).css("fontWeight")==="bold"){SC.$(this).addClass("Apple-style-span")
+}if(SC.$(this).css("fontStyle")==="italic"){SC.$(this).addClass("Apple-style-span")
+}if(SC.$(this).css("textDecoration")==="underline"){SC.$(this).addClass("Apple-style-span")
 }})}b=a.html();b=this.tidyXHTML(b);b=b.replace(/<\/p>(\n)*<p>/g,"\n\n");b=b.replace(/(\n)?<br( \/)?>(\n)?/g,"\n");
 b=b.replace(/^<p>/g,"");b=b.replace(/<\/p>$/g,"");if(SC.browser.mozilla){b=b.replace(/\n/g,"<br>");
 b=b+"<br>"}else{if(SC.browser.safari){b=b.replace(/\n/g,"</div><div>");b="<div>"+b+"</div>";
@@ -4501,8 +4505,8 @@ a=this._gsub(a,/<([A-Z]+)([^>]*)>/,function(b){return"<"+b[1].toLowerCase()+b[2]
 a=a.replace(/<br>/g,"<br />");return a},_fontSizeToPixels:function(c){var a=this.get("fontSizePixels"),b=parseInt(c,10);
 if(b>=a.length){b=a.length-1}return a[b]+"px"},_fontNameToPixels:function(c){var d=this.get("fontSizeNames"),a=this.get("fontSizePixels"),b;
 b=d.indexOf(c);if(b>=0){return a[b]+"px"}else{return null}},_gsub:function(e,d,c){var a="",b;
-while(e.length>0){if(b=e.match(d)){a+=e.slice(0,b.index);replaced=(typeof(c)=="function")?c(b):c;
-a+=replaced==null?"":String(replaced);e=e.slice(b.index+b[0].length)}else{a+=e;e=""
+while(e.length>0){if(b=e.match(d)){a+=e.slice(0,b.index);replaced=(typeof(c)==="function")?c(b):c;
+a+=replaced===null?"":String(replaced);e=e.slice(b.index+b[0].length)}else{a+=e;e=""
 }}return a}});SC.IFrameRootResponder=SC.RootResponder.extend({iframe:null,target:null,setup:function(){var d=this.get("iframe"),c=d.contentWindow,e=c.document;
 this.listenFor("keydown keyup mousedown mouseup click dblclick mouseout mouseover mousemove selectstart".w(),e).listenFor("resize focus blur".w(),c);
 if(this.keypress){if(SC.CAPTURE_BACKSPACE_KEY&&SC.browser.mozilla){var b=this;e.onkeypress=function(f){f=SC.Event.normalizeEvent(f);
@@ -4567,8 +4571,9 @@ this.$inputWindow().get(0).focus()}}},willLoseKeyResponderTo:function(a){this._l
 if(SC.none(g)){g=""}d=c.parentElement()}else{var g=this.$inputWindow().get(0).getSelection(),b=g.getRangeAt(0),h=b.commonAncestorContainer,i=h.childNodes,e=[],a,f;
 for(f=0;f<i.length;f++){a=i[f];if(g.containsNode(a,true)&&!(a.nodeType===3&&a.length===0)){e.push(a)
 }}if(e.length===1&&e[0].nodeType===1){d=e[0]}else{d=h}while(d&&d.nodeType!==1){d=d.parentNode
-}}this.setIfChanged("selection",g.toString());this.setIfChanged("selectionElement",d)
-},queryCursorPos:function(){var a=this.$inputWindow().get(0),g=this.$inputDocument().get(0),h;
+}}this.propertyWillChange("selection");this.propertyWillChange("selectionElement");
+this.set("selection",g.toString());this.set("selectionElement",d);this.propertyDidChange("selection");
+this.propertyDidChange("selectionElement")},queryCursorPos:function(){var a=this.$inputWindow().get(0),g=this.$inputDocument().get(0),h;
 if(a.getSelection){var e=a.getSelection(),c=e.anchorNode,f=e.anchorOffset;if(c.nodeType===1){c=c.childNodes[f];
 f=0}h=this._anchorNodeOffset(c)+f}else{if(g.selection){var b=g.selection.createRange();
 var d=b.getBookmark();h=d.charCodeAt(2)-11}}this.setIfChanged("cursorPos",h)},_anchorNodeOffset:function(b){if(b===this.$inputBody().get(0)){return 0
@@ -4642,14 +4647,19 @@ return !RichText.blank(a)&&a<this.get("defaultFontSize")}.property("selectionFon
 }.property("selection").cacheable(),selectionIsSubscript:function(a,b){return this._basicSelectionModifier("selectionIsSubscript","subscript",b)
 }.property("selection").cacheable(),selectionIsOrderedList:function(a,b){return this._basicSelectionModifier("selectionIsOrderedList","insertorderedlist",b)
 }.property("selection").cacheable(),selectionIsUnorderedList:function(a,b){return this._basicSelectionModifier("selectionIsUnorderedList","insertunorderedlist",b)
+}.property("selection").cacheable(),undoAllowed:function(){return this.iframeQueryEnabled("undo")
+}.property("selection").cacheable(),redoAllowed:function(){return this.iframeQueryEnabled("redo")
 }.property("selection").cacheable(),selectionIncreaseSize:function(){var a=this.get("selectionFontSize");
 this.set("selectionFontSize",a+1)},selectionDecreaseSize:function(){var a=this.get("selectionFontSize");
 this.set("selectionFontSize",a-1)},selectionIndent:function(){this.iframeExecCommand("indent",false,YES);
 this.changedSelection()},selectionOutdent:function(){this.iframeExecCommand("outdent",false,YES);
 this.changedSelection()},selectionRemoveFormatting:function(){this.iframeExecCommand("removeformat",false,YES);
+this.changedSelection()},undoChange:function(){this.iframeExecCommand("undo",false,YES);
+this.changedSelection()},redoChange:function(){this.iframeExecCommand("redo",false,YES);
 this.changedSelection()},iframeExecCommand:function(){var a=this.$inputDocument().get(0);
 return a.execCommand.apply(a,arguments)},iframeQueryState:function(){var a=this.$inputDocument().get(0);
-return a.queryCommandState.apply(a,arguments)}});RichText.EditorView.mixin({loadedStylesheets:{},pendingStylesheets:[],stylesheetObservers:{},stylesheetIsLoaded:function(a){return !!this.loadedStylesheets[a]
+return a.queryCommandState.apply(a,arguments)},iframeQueryEnabled:function(){var a=this.$inputDocument().get(0);
+return a.queryCommandEnabled.apply(a,arguments)}});RichText.EditorView.mixin({loadedStylesheets:{},pendingStylesheets:[],stylesheetObservers:{},stylesheetIsLoaded:function(a){return !!this.loadedStylesheets[a]
 },stylesheetIsLoading:function(a){return this.pendingStylesheets.indexOf(a)!==-1},loadStylesheet:function(a,b,c){if(b&&c){this.addStylesheetObserver(a,b,c)
 }if(!this.stylesheetIsLoaded(a)&&!this.stylesheetIsLoading(a)){this.pendingStylesheets.push(a);
 return SC.Request.getUrl(a).notify(this,this._stylesheetDidLoad,{url:a}).send()}},addStylesheetObserver:function(a,b,d){var c=this.stylesheetObservers;
@@ -4658,6 +4668,6 @@ this.loadedStylesheets[d]=c;this.pendingStylesheets.removeObject(d);this._notify
 },_notifyLoad:function(b){var c,a;c=this.stylesheetObservers[b];if(c){for(idx=0;idx<c.length;
 idx++){a=c[idx];a.target[a.method](b)}}}});SC.TextFieldView=SC.TextFieldView.extend({didLoseKeyResponderTo:function(a){if(!SC.RootResponder.responder.get("richTextEditorHasFocus")){this.$input()[0].blur()
 }}});RichText.ToolbarButtonView=SC.ButtonView.extend({buttonBehavior:SC.TOGGLE_BEHAVIOR,toggleOnValue:YES,toggleOffValue:NO,titleMinWidth:0});
-sc_require("views/toolbar_button");RichText.ToolbarView=SC.View.extend({classNames:"rich-text-toolbar-view",childViews:("strikethroughButton boldButton underlineButton italicsButton leftAlignButton justifyButton centerButton rightAlignButton defaultColorButton hightlightButton highlightBackgroundButton increaseSizeButton decreaseSizeButton resetSizeButton superscriptButton subscriptButton indentButton outdentButton orderedListButton unorderedListButton removeFormattingButton").w(),editor:null,layout:{top:0,left:0,right:0,bottom:SC.LAYOUT_AUTO},strikethroughButton:RichText.ToolbarButtonView.extend({title:"S",valueBinding:".parentView.editor.selectionIsStrikethrough"}),boldButton:RichText.ToolbarButtonView.extend({title:"B",valueBinding:".parentView.editor.selectionIsBold"}),underlineButton:RichText.ToolbarButtonView.extend({title:"U",valueBinding:".parentView.editor.selectionIsUnderlined"}),italicsButton:RichText.ToolbarButtonView.extend({title:"I",valueBinding:".parentView.editor.selectionIsItalicized"}),leftAlignButton:RichText.ToolbarButtonView.extend({title:"Left",buttonBehavior:SC.TOGGLE_ON_BEHAVIOR,valueBinding:".parentView.editor.selectionIsLeftAligned"}),justifyButton:RichText.ToolbarButtonView.extend({title:"Justified",buttonBehavior:SC.TOGGLE_ON_BEHAVIOR,valueBinding:".parentView.editor.selectionIsJustified"}),centerButton:RichText.ToolbarButtonView.extend({title:"Center",buttonBehavior:SC.TOGGLE_ON_BEHAVIOR,valueBinding:".parentView.editor.selectionIsCentered"}),rightAlignButton:RichText.ToolbarButtonView.extend({title:"Right",buttonBehavior:SC.TOGGLE_ON_BEHAVIOR,valueBinding:".parentView.editor.selectionIsRightAligned"}),defaultColorButton:RichText.ToolbarButtonView.extend({title:"Default Color",buttonBehavior:SC.TOGGLE_ON_BEHAVIOR,valueBinding:".parentView.editor.selectionIsDefaultColor"}),hightlightButton:RichText.ToolbarButtonView.extend({title:"Highlight",valueBinding:".parentView.editor.selectionIsHighlighted"}),highlightBackgroundButton:RichText.ToolbarButtonView.extend({title:"Highlight BG",valueBinding:".parentView.editor.selectionIsBackgroundHighlighted"}),highlightBackgroundButton:RichText.ToolbarButtonView.extend({title:"Highlight BG",valueBinding:".parentView.editor.selectionIsBackgroundHighlighted"}),increaseSizeButton:RichText.ToolbarButtonView.extend({title:"+",buttonBehavior:SC.PUSH_BEHAVIOR,targetBinding:".parentView.editor",action:"selectionIncreaseSize",valueBinding:".parentView.editor.selectionIsSizeIncreased"}),decreaseSizeButton:RichText.ToolbarButtonView.extend({title:"-",buttonBehavior:SC.PUSH_BEHAVIOR,targetBinding:".parentView.editor",action:"selectionDecreaseSize",valueBinding:".parentView.editor.selectionIsSizeDecreased"}),resetSizeButton:RichText.ToolbarButtonView.extend({title:"+-",buttonBehavior:SC.TOGGLE_ON_BEHAVIOR,valueBinding:".parentView.editor.selectionIsDefaultSize"}),superscriptButton:RichText.ToolbarButtonView.extend({title:"Super",valueBinding:".parentView.editor.selectionIsSuperscript"}),subscriptButton:RichText.ToolbarButtonView.extend({title:"Sub",valueBinding:".parentView.editor.selectionIsSubscript"}),indentButton:RichText.ToolbarButtonView.extend({title:"Indent",buttonBehavior:SC.PUSH_BEHAVIOR,targetBinding:".parentView.editor",action:"selectionIndent"}),outdentButton:RichText.ToolbarButtonView.extend({title:"Outdent",buttonBehavior:SC.PUSH_BEHAVIOR,targetBinding:".parentView.editor",action:"selectionOutdent"}),orderedListButton:RichText.ToolbarButtonView.extend({title:"OL",valueBinding:".parentView.editor.selectionIsOrderedList"}),unorderedListButton:RichText.ToolbarButtonView.extend({title:"UL",valueBinding:".parentView.editor.selectionIsUnorderedList"}),removeFormattingButton:RichText.ToolbarButtonView.extend({title:"Remove",buttonBehavior:SC.PUSH_BEHAVIOR,targetBinding:".parentView.editor",action:"selectionRemoveFormatting"})});
+sc_require("views/toolbar_button");RichText.ToolbarView=SC.View.extend({classNames:"rich-text-toolbar-view",childViews:("strikethroughButton boldButton underlineButton italicsButton leftAlignButton justifyButton centerButton rightAlignButton defaultColorButton hightlightButton highlightBackgroundButton increaseSizeButton decreaseSizeButton resetSizeButton superscriptButton subscriptButton indentButton outdentButton orderedListButton unorderedListButton removeFormattingButton undoButton redoButton").w(),editor:null,layout:{top:0,left:0,right:0,bottom:SC.LAYOUT_AUTO},strikethroughButton:RichText.ToolbarButtonView.extend({title:"S",valueBinding:".parentView.editor.selectionIsStrikethrough"}),boldButton:RichText.ToolbarButtonView.extend({title:"B",valueBinding:".parentView.editor.selectionIsBold"}),underlineButton:RichText.ToolbarButtonView.extend({title:"U",valueBinding:".parentView.editor.selectionIsUnderlined"}),italicsButton:RichText.ToolbarButtonView.extend({title:"I",valueBinding:".parentView.editor.selectionIsItalicized"}),leftAlignButton:RichText.ToolbarButtonView.extend({title:"Left",buttonBehavior:SC.TOGGLE_ON_BEHAVIOR,valueBinding:".parentView.editor.selectionIsLeftAligned"}),justifyButton:RichText.ToolbarButtonView.extend({title:"Justified",buttonBehavior:SC.TOGGLE_ON_BEHAVIOR,valueBinding:".parentView.editor.selectionIsJustified"}),centerButton:RichText.ToolbarButtonView.extend({title:"Center",buttonBehavior:SC.TOGGLE_ON_BEHAVIOR,valueBinding:".parentView.editor.selectionIsCentered"}),rightAlignButton:RichText.ToolbarButtonView.extend({title:"Right",buttonBehavior:SC.TOGGLE_ON_BEHAVIOR,valueBinding:".parentView.editor.selectionIsRightAligned"}),defaultColorButton:RichText.ToolbarButtonView.extend({title:"Default Color",buttonBehavior:SC.TOGGLE_ON_BEHAVIOR,valueBinding:".parentView.editor.selectionIsDefaultColor"}),hightlightButton:RichText.ToolbarButtonView.extend({title:"Highlight",valueBinding:".parentView.editor.selectionIsHighlighted"}),highlightBackgroundButton:RichText.ToolbarButtonView.extend({title:"Highlight BG",valueBinding:".parentView.editor.selectionIsBackgroundHighlighted"}),highlightBackgroundButton:RichText.ToolbarButtonView.extend({title:"Highlight BG",valueBinding:".parentView.editor.selectionIsBackgroundHighlighted"}),increaseSizeButton:RichText.ToolbarButtonView.extend({title:"+",buttonBehavior:SC.PUSH_BEHAVIOR,targetBinding:".parentView.editor",action:"selectionIncreaseSize",valueBinding:".parentView.editor.selectionIsSizeIncreased"}),decreaseSizeButton:RichText.ToolbarButtonView.extend({title:"-",buttonBehavior:SC.PUSH_BEHAVIOR,targetBinding:".parentView.editor",action:"selectionDecreaseSize",valueBinding:".parentView.editor.selectionIsSizeDecreased"}),resetSizeButton:RichText.ToolbarButtonView.extend({title:"+-",buttonBehavior:SC.TOGGLE_ON_BEHAVIOR,valueBinding:".parentView.editor.selectionIsDefaultSize"}),superscriptButton:RichText.ToolbarButtonView.extend({title:"Super",valueBinding:".parentView.editor.selectionIsSuperscript"}),subscriptButton:RichText.ToolbarButtonView.extend({title:"Sub",valueBinding:".parentView.editor.selectionIsSubscript"}),indentButton:RichText.ToolbarButtonView.extend({title:"Indent",buttonBehavior:SC.PUSH_BEHAVIOR,targetBinding:".parentView.editor",action:"selectionIndent"}),outdentButton:RichText.ToolbarButtonView.extend({title:"Outdent",buttonBehavior:SC.PUSH_BEHAVIOR,targetBinding:".parentView.editor",action:"selectionOutdent"}),orderedListButton:RichText.ToolbarButtonView.extend({title:"OL",valueBinding:".parentView.editor.selectionIsOrderedList"}),unorderedListButton:RichText.ToolbarButtonView.extend({title:"UL",valueBinding:".parentView.editor.selectionIsUnorderedList"}),removeFormattingButton:RichText.ToolbarButtonView.extend({title:"Remove",buttonBehavior:SC.PUSH_BEHAVIOR,targetBinding:".parentView.editor",action:"selectionRemoveFormatting"}),undoButton:RichText.ToolbarButtonView.extend({title:"Undo",isEnabledBinding:".parentView.editor.undoAllowed",buttonBehavior:SC.PUSH_BEHAVIOR,targetBinding:".parentView.editor",action:"undoChange"}),redoButton:RichText.ToolbarButtonView.extend({title:"Redo",isEnabledBinding:".parentView.editor.redoAllowed",buttonBehavior:SC.PUSH_BEHAVIOR,targetBinding:".parentView.editor",action:"redoChange"})});
 if((typeof SC!=="undefined")&&SC&&SC.bundleDidLoad){SC.bundleDidLoad("rich_text")
 };
