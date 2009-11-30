@@ -4467,20 +4467,19 @@ j=j.replace(/\n\n+/g,"</p>\n\n<p>");j=this._gsub(j,/(([^\n])(\n))(?=([^\n]))/,fu
 });j="<p>"+j+"</p>";j=j.replace(/<p>\s*/g,"<p>");j=j.replace(/\s*<\/p>/g,"</p>");
 var f=SC.$("<div></div>");f.html(j);f.find("ul, ol").each(function(){c=SC.$(this);
 e=c.prev()[0];if(e&&e.tagName==="LI"){c.prev().append(this)}});d=f.find("font");for(i=0;
-i<d.length;i++){c=SC.$(d[i]);l=SC.$("<span>"+c.html()+"</span>");if(g=c.attr("color")){l.css("color",g)
-}if(a=c.css("background-color")){l.css("background-color",a)}if(m=c.attr("size")){l.css("font-size",this._fontSizeToPixels(m))
-}c.replaceWith(l)}d=f.find("span");for(i=0;i<d.length;i++){b=d[i];c=SC.$(b);g=c.css("color");
-a=c.css("background-color");if(g==="transparent"||g==="inherit"){c.css("color","")
-}if(a==="transparent"||a==="inherit"){c.css("background-color","")}if(b.style.length===0){c.removeAttr("style")
-}}if(SC.browser.safari||SC.browser.mozilla){do{k=false;d=f.find("span");for(i=0;i<d.length;
-i++){b=d[i];c=SC.$(b);if(c.hasClass("Apple-style-span")){c.removeClass("Apple-style-span");
-if(c.attr("class")===""){c.removeAttr("class")}k=true}else{if(c.css("fontWeight")==="bold"){c.css({fontWeight:""});
+i<d.length;i++){b=d[i];c=SC.$(b);l=SC.$("<span>"+c.html()+"</span>");if(g=c.attr("color")){l.css("color",g)
+}if(a=b.style.backgroundColor){l.css("background-color",a)}if(m=c.attr("size")){l.css("font-size",this._fontSizeToPixels(m))
+}c.replaceWith(l)}d=f.find("span");for(i=0;i<d.length;i++){b=d[i];c=SC.$(b);g=b.style.color;
+a=b.style.backgroundColor;if(g==="transparent"||g==="inherit"){c.css("color","")}if(a==="transparent"||a==="inherit"){c.css("background-color","")
+}if(b.style.length===0){c.removeAttr("style")}}if(SC.browser.safari||SC.browser.mozilla){do{k=false;
+d=f.find("span");for(i=0;i<d.length;i++){b=d[i];c=SC.$(b);if(c.hasClass("Apple-style-span")){c.removeClass("Apple-style-span");
+if(c.attr("class")===""){c.removeAttr("class")}k=true}else{if(b.style.fontWeight==="bold"){c.css({fontWeight:""});
 if(b.style.length===0){c.removeAttr("style")}c.html("<strong>"+c.html()+"</strong>");
-k=true}else{if(c.css("fontStyle")==="italic"){c.css({fontStyle:""});if(b.style.length===0){c.removeAttr("style")
-}c.html("<em>"+c.html()+"</em>");k=true}else{if(c.css("textDecoration")==="underline"){c.css({textDecoration:""});
+k=true}else{if(b.style.fontStyle==="italic"){c.css({fontStyle:""});if(b.style.length===0){c.removeAttr("style")
+}c.html("<em>"+c.html()+"</em>");k=true}else{if(b.style.textDecoration==="underline"){c.css({textDecoration:""});
 if(b.style.length===0){c.removeAttr("style")}c.html("<u>"+c.html()+"</u>");k=true
-}else{if(c.css("textDecoration")==="line-through"){c.css({textDecoration:""});if(b.style.length===0){c.removeAttr("style")
-}c.html("<del>"+c.html()+"</del>");k=true}else{if(m=this._fontNameToPixels(c.css("font-size"))){c.css("font-size",m);
+}else{if(b.style.textDecoration==="line-through"){c.css({textDecoration:""});if(b.style.length===0){c.removeAttr("style")
+}c.html("<del>"+c.html()+"</del>");k=true}else{if(m=this._fontNameToPixels(b.style.fontSize)){c.css("font-size",m);
 k=true}else{if(b.attributes.length===0){c.replaceWith(c.html());k=true}}}}}}}}}while(k)
 }if(SC.browser.safari||SC.browser.msie){do{d=f.find("blockquote");d.each(function(){c=SC.$(this);
 c.replaceWith("<div style='margin-left: 40px'>"+c.html()+"</div>")})}while(d.length>0)
@@ -4491,9 +4490,8 @@ return j},formatHTMLInput:function(b){var a=SC.$("<div></div>");a.html(b);if(SC.
 });a.find("em").each(function(){SC.$(this).replaceWith('<span style="font-style: italic;">'+SC.$(this).html()+"</span>")
 });a.find("u").each(function(){SC.$(this).replaceWith('<span style="text-decoration: underline;">'+SC.$(this).html()+"</span>")
 });a.find("del").each(function(){SC.$(this).replaceWith('<span style="text-decoration: line-through;">'+SC.$(this).html()+"</span>")
-})}if(SC.browser.safari){a.find("span").each(function(){if(SC.$(this).css("fontWeight")==="bold"){SC.$(this).addClass("Apple-style-span")
-}if(SC.$(this).css("fontStyle")==="italic"){SC.$(this).addClass("Apple-style-span")
-}if(SC.$(this).css("textDecoration")==="underline"){SC.$(this).addClass("Apple-style-span")
+})}if(SC.browser.safari){a.find("span").each(function(){if(this.style.fontWeight==="bold"){SC.$(this).addClass("Apple-style-span")
+}if(this.style.fontStyle==="italic"){SC.$(this).addClass("Apple-style-span")}if(this.style.textDecoration==="underline"){SC.$(this).addClass("Apple-style-span")
 }})}b=a.html();b=this.tidyXHTML(b);b=b.replace(/<\/p>(\n)*<p>/g,"\n\n");b=b.replace(/(\n)?<br( \/)?>(\n)?/g,"\n");
 b=b.replace(/^<p>/g,"");b=b.replace(/<\/p>$/g,"");if(SC.browser.mozilla){b=b.replace(/\n/g,"<br>");
 b=b+"<br>"}else{if(SC.browser.safari){b=b.replace(/\n/g,"</div><div>");b="<div>"+b+"</div>";
