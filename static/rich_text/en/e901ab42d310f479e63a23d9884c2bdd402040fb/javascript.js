@@ -1,4 +1,4 @@
-SC.stringsFor("English",{});RichText=SC.Object.create({NAMESPACE:"RichText",VERSION:"0.3.1",blank:function(a){return SC.none(a)||a===""
+SC.stringsFor("English",{});RichText=SC.Object.create({NAMESPACE:"RichText",VERSION:"0.3.2",blank:function(a){return SC.none(a)||a===""
 }});RichText.HtmlSanitizer=SC.Object.create({fontSizeNames:function(){var a="xxx-small xx-small x-small small medium large x-large xx-large".w();
 if(SC.browser.safari){a.shift();a.push("-webkit-xxx-large")}return a}.property().cacheable(),fontSizePixels:"9 10 13 16 18 24 32 48".w(),formatHTMLOutput:function(j){var k,l,d,b,c,e,g,a,m,i;
 j=this.tidyXHTML(j);if(SC.browser.safari){j=j.replace(/(<div>)+/g,"\n");j=j.replace(/(<\/div>)+/g,"");
@@ -81,13 +81,14 @@ if(!SC.RootResponder.responder.get("richTextEditorHasFocus")){this.$input()[0].b
 },$inputWindow:function(){return this.$input().map(function(){return this.contentWindow
 })},$inputDocument:function(){return this.$inputWindow().map(function(){return this.document
 })},$inputBody:function(){return this.$inputDocument().map(function(){return this.body
-})},fieldValue:function(){return RichText.HtmlSanitizer.formatHTMLInput(arguments.callee.base.apply(this,arguments))
+})},value:function(a,b){if(b!==undefined){this.setValueWithoutField(b);if(this._value!==b){this.setFieldValue(this.get("fieldValue"))
+}}return this._value}.property().cacheable(),setValueWithoutField:function(a){this.propertyWillChange("value");
+this._value=a;this.propertyDidChange("value")},fieldValue:function(){return RichText.HtmlSanitizer.formatHTMLInput(arguments.callee.base.apply(this,arguments))
 }.property("value","validator").cacheable(),setFieldValue:function(a){if(this.get("editorIsReady")){this.$inputBody().html(a)
 }return this},getFieldValue:function(){return this.get("editorIsReady")?this.$inputBody().html():null
 },fieldValueDidChange:function(a){var c=this.getFieldValue();var b=this.objectForFieldValue(c,a);
-b=RichText.HtmlSanitizer.formatHTMLOutput(b);this._skipSetFieldValue=YES;SC.RunLoop.begin();
-this.setIfChanged("value",b);SC.RunLoop.end();this._skipSetFieldValue=NO},_field_valueDidChange:function(){if(!this._skipSetFieldValue){this.setFieldValue(this.get("fieldValue"))
-}}.observes("value"),render:function(c,d){arguments.callee.base.apply(this,arguments);
+b=RichText.HtmlSanitizer.formatHTMLOutput(b);if(this.get("value")!==b){this.setValueWithoutField(b)
+}},_field_valueDidChange:function(){},render:function(c,d){arguments.callee.base.apply(this,arguments);
 var b=SC.guidFor(this);var a=this.get("fieldValue");if(SC.none(a)){a=""}c.setClass("not-empty",a.length>0);
 this._renderField(c,d,a)},_renderField:function(b,d,c){if(d){var a=SC.guidFor(this);
 b.push('<span class="border"></span>');b.push('<iframe name="%@"></iframe></span>'.fmt(a))
@@ -100,21 +101,20 @@ this._pendingStylesheets=b.length;for(idx=0;idx<b.length;idx++){a=b[idx];if(Rich
 if(this._pendingStylesheets<=0){this._setupEditor()}},_writeDocument:function(b){if(!b){b=""
 }var a=this.$inputDocument().get(0);a.open("text/html","replace");a.write("<html><head>%@</head><body></body></html>".fmt(b));
 if(!SC.browser.msie){a.close()}},_setupEditor:function(){if(this.get("editorIsReady")){return
-}var g=this.$inputDocument(),e=g.get(0),b=(SC.browser.msie)?this.$input():g,h=this.get("stylesheets"),d,f="",c,a;
-if(this.get("loadStylesheetsInline")){f+="<style type='text/css'>\n";for(a=0;a<h.length;
-a++){d=h[a];f+="/* BEGIN %@ */\n\n".fmt(d);f+=RichText.EditorView.loadedStylesheets[d];
-f+="/* END %@ */\n\n".fmt(d)}f+="</style>\n"}else{for(a=0;a<h.length;a++){f+='<link rel="stylesheet" href="%@" type="text/css" charset="utf-8">\n'.fmt(h[a])
-}}this._writeDocument(f);if(e.body.contentEditable){e.body.contentEditable=true}else{e.designMode="On"
-}this.set("editorIsReady",YES);this.setFieldValue(this.get("fieldValue"));c=SC.IFrameRootResponder.create({iframe:this.$input().get(0),target:this});
-c.setup();this.set("iframeRootResponder",c);SC.Event.add(g,"paste",this,this.pasteCaught);
-SC.Event.add(b,"focus",this,this._field_fieldDidFocus);SC.Event.add(g,"blur",this,this._field_fieldDidBlur)
-},willDestroyLayer:function(){var c=this.$inputDocument(),a=(SC.browser.msie)?this.$input():c,b=this.get("iframeRootResponder");
+}var a=this.$inputDocument(),g=a.get(0),h=(SC.browser.msie)?this.$input():a,j=this.get("stylesheets"),f,b="",c,i;
+try{g.designMode="on"}catch(d){a.focus(function(){g.designMode()})}if(this.get("loadStylesheetsInline")){b+="<style type='text/css'>\n";
+for(i=0;i<j.length;i++){f=j[i];b+="/* BEGIN %@ */\n\n".fmt(f);b+=RichText.EditorView.loadedStylesheets[f];
+b+="/* END %@ */\n\n".fmt(f)}b+="</style>\n"}else{for(i=0;i<j.length;i++){b+='<link rel="stylesheet" href="%@" type="text/css" charset="utf-8">\n'.fmt(j[i])
+}}this._writeDocument(b);this.set("editorIsReady",YES);this.setFieldValue(this.get("fieldValue"));
+c=SC.IFrameRootResponder.create({iframe:this.$input().get(0),target:this});c.setup();
+this.set("iframeRootResponder",c);SC.Event.add(a,"paste",this,this.pasteCaught);SC.Event.add(h,"focus",this,this._field_fieldDidFocus);
+SC.Event.add(a,"blur",this,this._field_fieldDidBlur)},willDestroyLayer:function(){var c=this.$inputDocument(),a=(SC.browser.msie)?this.$input():c,b=this.get("iframeRootResponder");
 b.teardown();this.set("iframeRootResponder",null);SC.Event.remove(c,"blur",this,this._field_fieldDidBlur);
 SC.Event.remove(a,"focus",this,this._field_fieldDidFocus);SC.Event.remove(c,"paste",this,this.pasteCaught);
 SC.Event.remove(this.$input(),"load",this,this._field_checkIFrameDidLoad)},keyUp:function(a){this.querySelection();
 this.queryCursorPos();this._field_fieldValueDidChange(a)},mouseUp:function(a){this.querySelection();
-this.queryCursorPos()},pasteCaught:function(a){this.querySelection();this.queryCursorPos();
-this._field_fieldValueDidChange(a)},_loseBlur:function(){if(this._isFocused){this._isFocused=NO;
+this.queryCursorPos();a.allowDefault()},pasteCaught:function(a){this.querySelection();
+this.queryCursorPos();this._field_fieldValueDidChange(a)},_loseBlur:function(){if(this._isFocused){this._isFocused=NO;
 SC.RootResponder.responder.set("richTextEditorHasFocus",NO)}},_field_fieldDidFocus:function(){this.becomeFirstResponder()
 },_field_fieldDidBlur:function(){this._loseBlur()},willBecomeKeyResponderFrom:function(a){if(!this._isFocused){this._isFocused=YES;
 this.becomeFirstResponder();if(this.get("isVisibleInWindow")){SC.RootResponder.responder.set("richTextEditorHasFocus",YES);
@@ -212,9 +212,10 @@ this.changedSelection()},selectionOutdent:function(){this.iframeExecCommand("out
 this.changedSelection()},selectionRemoveFormatting:function(){this.iframeExecCommand("removeformat",false,YES);
 this.changedSelection()},undoChange:function(){this.iframeExecCommand("undo",false,YES);
 this.changedSelection()},redoChange:function(){this.iframeExecCommand("redo",false,YES);
-this.changedSelection()},iframeExecCommand:function(){var a=this.$inputDocument().get(0);
-return a.execCommand.apply(a,arguments)},iframeQueryState:function(){var a=this.$inputDocument().get(0);
-return a.queryCommandState.apply(a,arguments)},iframeQueryEnabled:function(){var a=this.$inputDocument().get(0);
+this.changedSelection()},iframeExecCommand:function(){if(!this.get("editorIsReady")){return null
+}var a=this.$inputDocument().get(0);return a.execCommand.apply(a,arguments)},iframeQueryState:function(){if(!this.get("editorIsReady")){return null
+}var a=this.$inputDocument().get(0);return a.queryCommandState.apply(a,arguments)
+},iframeQueryEnabled:function(){if(!this.get("editorIsReady")){return null}var a=this.$inputDocument().get(0);
 return a.queryCommandEnabled.apply(a,arguments)}});RichText.EditorView.mixin({loadedStylesheets:{},pendingStylesheets:[],stylesheetObservers:{},stylesheetIsLoaded:function(a){return !!this.loadedStylesheets[a]
 },stylesheetIsLoading:function(a){return this.pendingStylesheets.indexOf(a)!==-1},loadStylesheet:function(a,b,c){if(b&&c){this.addStylesheetObserver(a,b,c)
 }if(!this.stylesheetIsLoaded(a)&&!this.stylesheetIsLoading(a)){this.pendingStylesheets.push(a);
