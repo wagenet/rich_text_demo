@@ -82,7 +82,7 @@ RichTextDemo.mainPage = SC.Page.design({
       _setValue: function(){
         if(this.get('isEnabled')) {
           var value = this.getPath('parentView.editorView.value');
-          this.set('value', value);
+          this.set('value', value.toString());
         }
       }.observes('.parentView.editorView.value')
 
