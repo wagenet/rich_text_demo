@@ -4490,8 +4490,10 @@ For more information about SproutCore, visit http://www.sproutcore.com
 ==========================================================================
 @license */
 }if((typeof SC!=="undefined")&&SC&&SC.bundleDidLoad){SC.bundleDidLoad("sproutcore")
-}SC.stringsFor("English",{});RichText=SC.Object.create({NAMESPACE:"RichText",VERSION:"0.3.2",blank:function(a){return SC.none(a)||a===""
-}});RichText.HtmlSanitizer=SC.Object.create({fontSizeNames:function(){var a="xxx-small xx-small x-small small medium large x-large xx-large".w();
+}SC.stringsFor("English",{});RichText=SC.Object.create({NAMESPACE:"RichText",VERSION:"0.3.3",blank:function(a){return SC.none(a)||a===""
+}});RichText.FormattedText=SC.Object.extend({value:"",cleanedText:function(){return RichText.htmlSanitizer.formatHTMLOutput(this.get("value"))
+}.property("value").cacheable(),toString:function(){return this.get("cleanedText")
+}.property("cleanedText").cacheable()});RichText.htmlSanitizer=SC.Object.create({fontSizeNames:function(){var a="xxx-small xx-small x-small small medium large x-large xx-large".w();
 if(SC.browser.safari){a.shift();a.push("-webkit-xxx-large")}return a}.property().cacheable(),fontSizePixels:"9 10 13 16 18 24 32 48".w(),formatHTMLOutput:function(j){var l,m,d,b,c,e,g,a,n,i;
 j=this.tidyXHTML(j);if(SC.browser.safari){j=j.replace(/(<div>)+/g,"\n");j=j.replace(/(<\/div>)+/g,"");
 j=j.replace(/<p>\s*<\/p>/g,"");j=j.replace(/<br \/>(\n)*/g,"\n")}else{if(SC.browser.mozilla){j=j.replace(/<p>/g,"");
@@ -4512,14 +4514,14 @@ d=f.find("span");for(i=0;i<d.length;i++){b=d[i];c=SC.$(b);if(c.hasClass("Apple-s
 if(c.attr("class")===""){c.removeAttr("class")}l=true}else{if(b.style.fontWeight==="bold"){c.css({fontWeight:""});
 if(b.style.length===0){c.removeAttr("style")}c.html("<strong>"+c.html()+"</strong>");
 l=true}else{if(b.style.fontStyle==="italic"){c.css({fontStyle:""});if(b.style.length===0){c.removeAttr("style")
-}c.html("<em>"+c.html()+"</em>");l=true}else{if(b.style.textDecoration==="underline"){c.css({textDecoration:""});
+}c.html("<em>"+c.html()+"</em>");l=true}else{if(b.style.textDecoration.match("underline")){c.css({textDecoration:b.style.textDecoration.replace("underline","").trim()});
 if(b.style.length===0){c.removeAttr("style")}c.html("<u>"+c.html()+"</u>");l=true
-}else{if(b.style.textDecoration==="line-through"){c.css({textDecoration:""});if(b.style.length===0){c.removeAttr("style")
-}c.html("<del>"+c.html()+"</del>");l=true}else{if(n=this._fontNameToPixels(b.style.fontSize)){c.css("font-size",n);
-l=true}else{if(b.attributes.length===0){c.replaceWith(c.html());l=true}}}}}}}}}while(l)
-}if(SC.browser.safari||SC.browser.msie){do{d=f.find("blockquote");d.each(function(){c=SC.$(this);
-c.replaceWith("<div style='margin-left: 40px'>"+c.html()+"</div>")})}while(d.length>0)
-}f.find("br").replaceWith("<br />");var h=["BR","IMG"];f.find("*").filter(function(){return SC.$(this).html()===""&&h.indexOf(this.nodeName)===-1&&this.id!=="bookmark"
+}else{if(b.style.textDecoration.match("line-through")){c.css({textDecoration:b.style.textDecoration.replace("line-through","").trim()});
+if(b.style.length===0){c.removeAttr("style")}c.html("<del>"+c.html()+"</del>");l=true
+}else{if(n=this._fontNameToPixels(b.style.fontSize)){c.css("font-size",n);l=true}else{if(b.attributes.length===0){c.replaceWith(c.html());
+l=true}}}}}}}}}while(l)}if(SC.browser.safari||SC.browser.msie){do{d=f.find("blockquote");
+d.each(function(){c=SC.$(this);c.replaceWith("<div style='margin-left: 40px'>"+c.html()+"</div>")
+})}while(d.length>0)}f.find("br").replaceWith("<br />");var h=["BR","IMG"];f.find("*").filter(function(){return SC.$(this).html()===""&&h.indexOf(this.nodeName)===-1&&this.id!=="bookmark"
 }).remove();j=f.html();j=this.tidyXHTML(j);j=j.replace(/<br \/>(\n)*/g,"<br />\n");
 j=j.replace(/<\/p>\n<p>/g,"</p>\n\n<p>");j=j.replace(/<p>\s*<\/p>/g,"");j=j.replace(/\s*$/g,"");
 return j},formatHTMLInput:function(b){var a=SC.$("<div></div>");a.html(b);if(SC.browser.mozilla||SC.browser.safari){a.find("strong").each(function(){SC.$(this).replaceWith('<span style="font-weight: bold;">'+SC.$(this).html()+"</span>")
@@ -4573,17 +4575,16 @@ if(!SC.RootResponder.responder.get("richTextEditorHasFocus")){this.$input()[0].b
 },$inputWindow:function(){return this.$input().map(function(){return this.contentWindow
 })},$inputDocument:function(){return this.$inputWindow().map(function(){return this.document
 })},$inputBody:function(){return this.$inputDocument().map(function(){return this.body
-})},value:function(a,b){if(b!==undefined){this.setValueWithoutField(b);if(this._value!==b){this.setFieldValue(this.get("fieldValue"))
+})},value:function(b,c){if(c!==undefined){if(typeof(c)==="string"){c=RichText.FormattedText.create({value:c})
+}var a=(this._value!==c);this.setValueWithoutField(c);if(a){this.setFieldValue(this.get("fieldValue"))
 }}return this._value}.property().cacheable(),setValueWithoutField:function(a){this.propertyWillChange("value");
-this._value=a;this.propertyDidChange("value")},fieldValue:function(){return RichText.HtmlSanitizer.formatHTMLInput(arguments.callee.base.apply(this,arguments))
-}.property("value","validator").cacheable(),setFieldValue:function(a){if(this.get("editorIsReady")){this.$inputBody().html(a)
+this._value=a;this.propertyDidChange("value")},fieldValue:function(){var a=arguments.callee.base.apply(this,arguments);
+return a?RichText.htmlSanitizer.formatHTMLInput(a.toString()):""}.property("value","validator").cacheable(),setFieldValue:function(a){if(this.get("editorIsReady")){this.$inputBody().html(a.toString())
 }return this},getFieldValue:function(){return this.get("editorIsReady")?this.$inputBody().html():null
 },fieldValueDidChange:function(a){var c=this.getFieldValue();var b=this.objectForFieldValue(c,a);
-b=RichText.HtmlSanitizer.formatHTMLOutput(b);if(this.get("value")!==b){this.setValueWithoutField(b)
-}},_field_valueDidChange:function(){},render:function(c,d){arguments.callee.base.apply(this,arguments);
-var b=SC.guidFor(this);var a=this.get("fieldValue");if(SC.none(a)){a=""}c.setClass("not-empty",a.length>0);
-this._renderField(c,d,a)},_renderField:function(b,d,c){if(d){var a=SC.guidFor(this);
-b.push('<span class="border"></span>');b.push('<iframe name="%@"></iframe></span>'.fmt(a))
+b=RichText.FormattedText.create({value:b});if(this.get("value")!==b){this.setValueWithoutField(b)
+}},_field_valueDidChange:function(){},render:function(b,c){arguments.callee.base.apply(this,arguments);
+var a=SC.guidFor(this);if(c){b.push('<span class="border"></span>');b.push('<iframe name="%@"></iframe></span>'.fmt(a))
 }},didCreateLayer:function(){SC.Event.add(this.$input(),"load",this,this._field_checkIFrameDidLoad)
 },_field_checkIFrameDidLoad:function(){var a=this.$input().get(0);if(a.contentWindow&&a.contentWindow.document){this.iframeDidLoad()
 }else{this.invokeLater("_field_checkIFrameDidLoad",500)}},iframeDidLoad:function(){if(!this.get("editorIsReady")){if(this.get("loadStylesheetsInline")){this._loadStylesheets()
