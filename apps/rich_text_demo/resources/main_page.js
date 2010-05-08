@@ -64,7 +64,7 @@ RichTextDemo.mainPage = SC.Page.design({
           var iframeHtml = this.getPath('parentView.editorView').getFieldValue();
           this.set('value', iframeHtml);
         }
-      }.observes('.parentView.editorView.value')
+      }.observes('.parentView.editorView.fieldValue')
 
     }),
 
