@@ -1,0 +1,1 @@
+config :rich_text_demo, :required => [:sproutcore, :rich_text]
