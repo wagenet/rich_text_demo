@@ -1,3 +1,3 @@
 [submodule "frameworks/rich_text"]
 	path = frameworks/rich_text
-	url = git://github.com/rxcfc/rich_text.git
+	url = git://github.com/sproutit/sproutcore-rich-text.git
